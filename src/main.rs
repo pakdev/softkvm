@@ -1,19 +1,19 @@
-extern crate ddc;
-
-use ddc::Ddc;
-use ddc_winapi::Monitor;
-
-fn ddc<D: Ddc>(mut ddc: D)
-where
-    D::Error: ::std::fmt::Debug,
-{
-    let input = ddc.get_vcp_feature(0x60).expect("failed to read VCP value");
-    println!("input is {:?}", input);
-}
+use ddc_hi::{Ddc, Display};
 
 fn main() {
-    for monitor in Monitor::enumerate().unwrap() {
-        println!("Monitor: {:?}", monitor);
-        ddc(monitor)
+    for mut display in Display::enumerate() {
+        display.update_capabilities().unwrap();
+        println!(
+            "{:?} {}: {:?} {:?}",
+            display.info.backend,
+            display.info.id,
+            display.info.manufacturer_id,
+            display.info.model_name
+        );
+
+        if let Some(feature) = display.info.mccs_database.get(0xdf) {
+            let value = display.handle.get_vcp_feature(feature.code).unwrap();
+            println!("{}: {:?}", feature.name.as_ref().unwrap(), value);
+        }
     }
 }
