@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package kvm;
+
+service Monitor {
+    rpc Query(QueryRequest) returns (QueryResponse);
+    rpc ChangeInput(InputRequest) returns (InputResponse);
+}
+
+message QueryRequest {
+}
+message QueryResponse {
+}
+
+message InputRequest {
+    int32 value = 1;
+}
+message InputResponse {
+}

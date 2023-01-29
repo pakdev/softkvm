@@ -1,9 +1,25 @@
 [package]
-name = "kvm"
+name = "softkvm"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "main"
+path = "src/main.rs"
+
+[[bin]]
+name = "softkvm-server"
+path = "src/server.rs"
+
+[[bin]]
+name = "softkvm-client"
+path = "src/client.rs"
 
 [dependencies]
 ddc-hi = "0.4.1"
+tonic = "0.8"
+prost = "0.11"
+tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+
+[build-dependencies]
+tonic-build = "0.8"

@@ -11,9 +11,14 @@ fn main() {
             display.info.model_name
         );
 
-        if let Some(feature) = display.info.mccs_database.get(0xdf) {
-            let value = display.handle.get_vcp_feature(feature.code).unwrap();
-            println!("{}: {:?}", feature.name.as_ref().unwrap(), value);
+        match display.info.manufacturer_id.as_deref() {
+            Some("ACR") => display.handle.set_vcp_feature(0x60, 15).unwrap(),
+            _ => println!("Not here"),
         }
+
+        // if let Some(feature) = display.info.mccs_database.get(0xdf) {
+        //     let value = display.handle.get_vcp_feature(feature.code).unwrap();
+        //     println!("{}: {:?}", feature.name.as_ref().unwrap(), value);
+        // }
     }
 }
