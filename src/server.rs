@@ -1,5 +1,5 @@
 use kvm::monitor_server::{Monitor, MonitorServer};
-use kvm::{InputRequest, InputResponse};
+use kvm::{QueryRequest, QueryResponse, InputRequest, InputResponse};
 use tonic::{transport::Server, Request, Response, Status};
 
 pub mod kvm {
@@ -11,10 +11,19 @@ pub struct MyMonitor {}
 
 #[tonic::async_trait]
 impl Monitor for MyMonitor {
+    async fn query(
+        &self,
+        request: Request<QueryRequest>,
+    ) -> Result<Response<QueryResponse>, Status> {
+        println!("Got a request: {:?}", request);
+        Ok(Response::new(QueryResponse {}))
+    }
+
     async fn change_input(
         &self,
         request: Request<InputRequest>,
     ) -> Result<Response<InputResponse>, Status> {
+        println!("Got a request: {:?}", request);
         Ok(Response::new(InputResponse {}))
     }
 }

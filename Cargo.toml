@@ -2,6 +2,7 @@
 name = "softkvm"
 version = "0.1.0"
 edition = "2021"
+proc-macro = true
 
 [[bin]]
 name = "main"
@@ -17,9 +18,9 @@ path = "src/client.rs"
 
 [dependencies]
 ddc-hi = "0.4.1"
-tonic = "0.8"
-prost = "0.11"
+tonic = "0.12.2"
+prost = "0.13"
 tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
 
 [build-dependencies]
-tonic-build = "0.8"
+tonic-build = "0.12"
